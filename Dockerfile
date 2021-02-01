@@ -7,8 +7,6 @@ RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSI
     && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
     && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
-RUN dotnet tool install --global dotnet-ef
-
 RUN mkdir -p /var/www
 RUN chown -R www-data:www-data /var/www
 RUN chown -R www-data:www-data /app
@@ -21,6 +19,8 @@ RUN chown -R www-data:www-data /app
 RUN usermod -u 1001 www-data
 
 USER www-data
+
+RUN dotnet tool install --global dotnet-ef
 
 EXPOSE 80
 

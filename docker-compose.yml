@@ -1,0 +1,49 @@
+version: "3.1"
+
+networks:
+  sql_server_api:
+    driver: bridge
+
+volumes:
+  sql_server_api_data:
+    driver: local
+
+services:
+  sqlserver-service:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: sqlserver_db
+    working_dir: /usr/src/app
+    command: sh -c './sql-server-entrypoint.sh & /opt/mssql/bin/sqlservr'
+    restart: unless-stopped
+    ports:
+      - "1433:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Str0ngP@ss
+    volumes:
+      - sql_server_api_data:/var/opt/mssql
+      - ./sql-server-entrypoint.sh:/usr/src/app/sql-server-entrypoint.sh
+      - ./setup.sql:/usr/src/app/setup.sql
+    networks:
+      - sql_server_api
+
+  app:
+    build: .
+    container_name: sql_server_api_app
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+      - "5001:5001"
+    volumes:
+      - .:/app
+    environment:
+      - DB_HOST=sqlserver-service
+      - DB_PORT=1433
+      - DEV_DB_DATABASE=net_core_api_development
+      - TEST_DB_DATABASE=net_core_api_test
+      - DB_USERNAME=SA
+      - DB_PASSWORD=Str0ngP@ss
+    depends_on:
+      - sqlserver-service
+    networks:
+      - sql_server_api

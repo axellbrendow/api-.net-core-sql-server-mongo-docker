@@ -1,0 +1,4 @@
+CREATE DATABASE net_core_api_development
+GO
+CREATE DATABASE net_core_api_test
+GO

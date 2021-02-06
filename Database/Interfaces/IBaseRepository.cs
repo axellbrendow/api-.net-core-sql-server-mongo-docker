@@ -14,6 +14,5 @@ namespace NetCoreApi.Database.Interfaces
             Expression<Func<T, bool>> where,
             params Expression<Func<T, object>>[] expressions
         );
-        int SaveChanges();
     }
 }

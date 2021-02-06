@@ -12,22 +12,19 @@ namespace NetCoreApi.Business.Services
 
         public BaseService(IBaseRepository<T> repository) => this._repository = repository;
 
-        public int Create(T t)
+        public void Create(T t)
         {
             _repository.Add(t);
-            return _repository.SaveChanges();
         }
 
-        public int Update(T t)
+        public void Update(T t)
         {
             _repository.Update(t);
-            return _repository.SaveChanges();
         }
 
         public void Delete(T t)
         {
             _repository.Delete(t);
-            _repository.SaveChanges();
         }
 
         public IEnumerable<T> GetAll(params Expression<Func<T, object>>[] expressions)

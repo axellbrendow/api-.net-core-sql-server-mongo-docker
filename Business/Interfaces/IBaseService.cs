@@ -6,8 +6,8 @@ namespace NetCoreApi.Business.Interfaces
 {
     public interface IBaseService<T>
     {
-        int Create(T t);
-        int Update(T t);
+        void Create(T t);
+        void Update(T t);
         void Delete(T t);
         IEnumerable<T> GetAll(params Expression<Func<T, object>>[] expressions);
         IEnumerable<T> Filter(

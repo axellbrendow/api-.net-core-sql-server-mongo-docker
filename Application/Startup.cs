@@ -22,28 +22,11 @@ namespace NetCoreApi.Application
 
         public IConfiguration Configuration { get; }
 
-        private static string getConnectionString()
-        {
-            var host = System.Environment.GetEnvironmentVariable("DB_HOST");
-            var port = System.Environment.GetEnvironmentVariable("DB_PORT");
-            var db = System.Environment.GetEnvironmentVariable("DEV_DB_DATABASE");
-            var username = System.Environment.GetEnvironmentVariable("DB_USERNAME");
-            var password = System.Environment.GetEnvironmentVariable("DB_PASSWORD");
-            return $@"
-Server={host},{port};
-Database={db};
-User Id={username};
-Password={password}
-";
-        }
-
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<DataContext>(
-                opsBuilder => opsBuilder.UseSqlServer(getConnectionString())
-            );
+            services.AddDbContext<DataContext>();
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddScoped(typeof(IBaseService<>), typeof(BaseService<>));
             services.AddSwaggerGen(c =>

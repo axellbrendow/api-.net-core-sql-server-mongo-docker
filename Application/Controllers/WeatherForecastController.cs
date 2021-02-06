@@ -3,7 +3,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using NetCoreApi.Business.Interfaces;
-using NetCoreApi.Core.Models;
+using NetCoreApi.Database.Models;
 
 namespace NetCoreApi.Application.Controllers
 {
